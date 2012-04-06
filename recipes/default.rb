@@ -6,34 +6,31 @@
 #
 # All rights reserved - Do Not Redistribute
 
-bash 'Get phantomjs source' do
-  cwd '/usr/local/src'
-  code %{
-    git clone #{node[:phantomjs][:repository]}
-    cd phantomjs
-    git checkout #{node[:phantomjs][:version]}
-  }
-  not_if '[ -d /usr/local/src/phantomjs ]'
+if node.kernel.machine == "x86_84"
+  tar_url = node[:phantomjs][:x86_64][:tar_url]
+  tar_checksum = node[:phantomjs][:x86_64][:checksum]
+  filename = node[:phantomjs][:x86_64][:filename]
+else
+  tar_url = node[:phantomjs][:x86][:tar_url]
+  tar_checksum = node[:phantomjs][:x86][:checksum]
+  filename = node[:phantomjs][:x86][:filename]
 end
 
-bash 'Update phantomjs' do
-  cwd '/usr/local/src/phantomjs'
-  code %{
-    git pull origin
-    git checkout #{node[:phantomjs][:version]}
-    git clean -xfd .
-  }
-  only_if "[ $(phantomjs --version | grep -c '#{node[:phantomjs][:version]}') -lt 1 ]"
+remote_file "Downloading phantomjs tar" do
+  path "/tmp/#{filename}"
+  source tar_url
+  mode "0644"
+  checksum tar_checksum
+  action :create_if_missing
 end
 
-bash 'Build phantomjs binary' do
-  cwd '/usr/local/src/phantomjs'
+bash 'untar phantomjs' do
   code %{
-    ./build.sh --jobs 1
-    deploy/package-linux-dynamic.sh
-    tar -zxf phantomjs.tar.gz -C /usr/local/
-    rm /usr/local/bin/phantomjs
-    ln -s /usr/local/phantomjs/bin/phantomjs /usr/local/bin/phantomjs
+    tar -zxf /tmp/#{filename} -C /usr/local/
   }
-  only_if "[ $(phantomjs --version | grep -c '#{node[:phantomjs][:version]}') -lt 1 ]"
+  not_if {File.directory?("/usr/local/phantomjs")}
+end
+
+link "/usr/bin/phantomjs" do
+  to "/usr/local/phantomjs/bin/phantomjs"
 end
