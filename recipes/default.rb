@@ -28,7 +28,6 @@ bash 'untar phantomjs' do
   code %{
     tar -zxf /tmp/#{filename} -C /usr/local/
   }
-  not_if {File.directory?("/usr/local/phantomjs")}
 end
 
 link "/usr/bin/phantomjs" do
