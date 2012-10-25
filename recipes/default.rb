@@ -24,9 +24,12 @@ remote_file "Downloading phantomjs tar" do
   action :create_if_missing
 end
 
+unzip_flag = 'z'
+unzip_flag = 'j' if filename =~ /\.bz2$/
+
 bash 'untar phantomjs' do
   code %{
-    tar -zxf /tmp/#{filename} -C /usr/local/
+    tar -#{unzip_flag}xf /tmp/#{filename} -C /usr/local/
   }
 end
 
