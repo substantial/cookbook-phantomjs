@@ -28,7 +28,7 @@ end
 unzip_flag = 'z'
 unzip_flag = 'j' if filename =~ /\.bz2$/
 
-install_path = `tar -#{unzip_flag}tf #{file_path} | sed "s/\\/.*$//" | uniq -c | sort -rn | head -1 | awk '{print $2}'`.chomp
+install_path = node[:phantomjs][:extracted_folder_name] || filename.sub(/\..*$/, "")
 
 bash 'untar phantomjs' do
   code %{
