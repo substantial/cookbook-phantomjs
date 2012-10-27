@@ -16,8 +16,9 @@ else
   filename = node[:phantomjs][:x86][:filename]
 end
 
+file_path = "#{Chef::Config[:file_cache_path]}/#{filename}"
 remote_file "Downloading phantomjs tar" do
-  path "/tmp/#{filename}"
+  path file_path
   source tar_url
   mode "0644"
   checksum tar_checksum
@@ -27,12 +28,15 @@ end
 unzip_flag = 'z'
 unzip_flag = 'j' if filename =~ /\.bz2$/
 
+install_path = `tar -#{unzip_flag}tf #{file_path} | sed "s/\\/.*$//" | uniq -c | sort -rn | head -1 | awk '{print $2}'`.chomp
+
 bash 'untar phantomjs' do
   code %{
     tar -#{unzip_flag}xf /tmp/#{filename} -C /usr/local/
   }
+  not_if { File.exists? "/usr/local/#{install_path}" }
 end
 
 link "/usr/bin/phantomjs" do
-  to "/usr/local/phantomjs/bin/phantomjs"
+  to "/usr/local/#{install_path}/bin/phantomjs"
 end
