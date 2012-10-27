@@ -28,7 +28,11 @@ end
 unzip_flag = 'z'
 unzip_flag = 'j' if filename =~ /\.bz2$/
 
-install_path = node[:phantomjs][:extracted_folder_name] || filename.sub(/\..*$/, "")
+# strip off both extentions
+default_install_path = File.basename(filename, File.extname(filename))
+default_install_path = File.basename(default_install_path, File.extname(default_install_path))
+
+install_path = node[:phantomjs][:extracted_folder_name] || default_install_path
 
 bash 'untar phantomjs' do
   code %{
