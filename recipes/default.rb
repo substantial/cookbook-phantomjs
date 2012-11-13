@@ -36,7 +36,7 @@ install_path = node[:phantomjs][:extracted_folder_name] || default_install_path
 
 bash 'untar phantomjs' do
   code %{
-    tar -#{unzip_flag}xf /tmp/#{filename} -C /usr/local/
+    tar -#{unzip_flag}xf #{file_path} -C /usr/local/
   }
   not_if { File.exists? "/usr/local/#{install_path}" }
 end
