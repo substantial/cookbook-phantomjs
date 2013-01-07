@@ -6,7 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 
-if node.kernel.machine == "x86_84"
+if node.kernel.machine == "x86_64"
   tar_url = node[:phantomjs][:x86_64][:tar_url]
   tar_checksum = node[:phantomjs][:x86_64][:checksum]
   filename = node[:phantomjs][:x86_64][:filename]
