@@ -1,7 +1,7 @@
-default[:phantomjs][:x86_64][:tar_url]  = "https://s3.amazonaws.com/teamcity-buildagent/phantomjs-2.0.0-ubuntu-12.04.tar.bz2"
-default[:phantomjs][:x86_64][:checksum] = "0ffdad604c4bd4a8ef40c5bc999b7340"
-default[:phantomjs][:x86_64][:filename] = "phantomjs-2.0.0-ubuntu-12.04.tar.bz2"
+default[:phantomjs][:x86_64][:tar_url]  = "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2"
+default[:phantomjs][:x86_64][:checksum] = "1c947d57fce2f21ce0b43fe2ed7cd361"
+default[:phantomjs][:x86_64][:filename] = "phantomjs-2.1.1-linux-x86_64.tar.bz2"
 
-default[:phantomjs][:x86][:tar_url]     = "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-i686.tar.bz2"
-default[:phantomjs][:x86][:checksum]    = "814a438ca515c6f7b1b2259d0d5bc804"
-default[:phantomjs][:x86][:filename]    = "phantomjs-1.9.8-linux-i686.tar.bz2"
+default[:phantomjs][:x86][:tar_url]     = "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-i686.tar.bz2"
+default[:phantomjs][:x86][:checksum]    = "0396e8249e082f72c1e39d33fc9d8de6"
+default[:phantomjs][:x86][:filename]    = "phantomjs-2.1.1-linux-i686.tar.bz2"
